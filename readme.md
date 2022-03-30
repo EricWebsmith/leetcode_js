@@ -26,3 +26,4 @@ console.assert(x === 1, 'X is not 1');
 // console.table
 console.table(people);
 ```
+

@@ -3,7 +3,7 @@
  * @param {number} high
  * @return {number[]}
  */
-var sequentialDigits = function(low, high) {
+function sequentialDigits(low, high) {
     const candidates = [
         123456789,
         12345678,
@@ -50,15 +50,15 @@ var sequentialDigits = function(low, high) {
         89,
         8,
         9
-    ]
+    ];
 
-    candidates.sort((a,b) => a-b);
+    candidates.sort((a, b) => a - b);
 
-    const ans = candidates.filter(c=>c>=low && c<=high);
+    const ans = candidates.filter(c => c >= low && c <= high);
     return ans;
 };
 
-function test(low, high){
+function test(low, high) {
     const ans = sequentialDigits(low, high);
     console.log(ans);
 }
@@ -68,6 +68,6 @@ test(1000, 13000);
 
 
 
-const a = [12,234,123, 23];
-a.sort((a,b) => a-b);
+const a = [12, 234, 123, 23];
+a.sort((a, b) => a - b);
 console.log(a);
