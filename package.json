@@ -3,9 +3,11 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "mocha": "^9.2.1"
+    "mocha": "^9.2.1",
+    "nyc": "^15.1.0"
   },
   "dependencies": {
-    "chai": "^4.3.6"
+    "chai": "^4.3.6",
+    "lodash": "^4.17.21"
   }
 }
