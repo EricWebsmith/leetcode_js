@@ -1,0 +1,82 @@
+/**
+ * 
+ * @param {number} val 
+ * @param {ListNode} next 
+ */
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+}
+
+/**
+ * 
+ * @param {number} val 
+ * @param {TreeNode} left 
+ * @param {TreeNode} right 
+ */
+function TreeNode(val, left, right) {
+    this.val = (val === undefined ? 0 : val)
+    this.left = (left === undefined ? null : left)
+    this.right = (right === undefined ? null : right)
+}
+
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} array
+ * @return {TreeNode}
+ */
+function array2TreeNode(array) {
+    if (!array || array.length === 0) {
+        return null;
+    }
+    const n = array.length;
+    const root = new TreeNode(array[0]);
+    const q = [root];
+    for (let i = 1; i < n; i += 2) {
+        let node = q.shift();
+
+        let left = null;
+        if (array[i] !== null) {
+            left = new TreeNode(array[i]);
+            node.left = left;
+            q.push(left);
+        }
+
+
+        let right = null;
+        if (i + 1 < n && array[i + 1] !== null) {
+            right = new TreeNode(array[i + 1]);
+            node.right = right;
+            q.push(right);
+        }
+
+    }
+
+    return root;
+}
+
+/**
+ * 
+ * @param {number[]} array 
+ * @returns {ListNode}
+ */
+function array2ListNode(array) {
+    if (array === null) {return null;}
+    if (array === undefined) {return undefined;}
+    if (array.length === 0) {return null;}
+
+    const head = new ListNode(array[0]);
+    let current = head;
+    for(let i = 1; i<array.length;i++) {
+        current.next = new ListNode(array[i]);
+        current = current.next;
+    }
+    return head;
+}
+
+module.exports = {
+    TreeNode,
+    array2TreeNode,
+    array2ListNode
+}
