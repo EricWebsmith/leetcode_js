@@ -27,3 +27,5 @@ console.assert(x === 1, 'X is not 1');
 console.table(people);
 ```
 
+for an array, pop/push is faster than shift/unshift.
+

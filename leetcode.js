@@ -75,8 +75,24 @@ function array2ListNode(array) {
     return head;
 }
 
+/**
+ * 
+ * @param {ListNode} head 
+ */
+function listNode2Array(head) {
+    const array = [];
+    let current = head;
+    while (current) {
+        array.push(current.val);
+        current = current.next;
+    }
+    return array;
+}
+
 module.exports = {
+    ListNode,
     TreeNode,
     array2TreeNode,
-    array2ListNode
+    array2ListNode,
+    listNode2Array
 }
