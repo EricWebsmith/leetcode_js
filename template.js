@@ -6,8 +6,8 @@ function func () {
 
 }
 
-function test(nums, expected) {
-    const actual = func (nums);
+function test(expected, args) {
+    const actual = func (args);
     if (actual !== expected) {
         console.log(actual, expected);
     }

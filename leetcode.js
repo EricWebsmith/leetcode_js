@@ -1,6 +1,33 @@
 /**
  * 
  * @param {number} val 
+ * @param {Node[]} children 
+ */
+function Node(val, children = []) {
+    this.val = val;
+    this.children = children;
+}
+
+function array2Node(arr) {
+    if (!arr || arr.length === 0) {return null;}
+    const head = new Node(arr[0]);
+    const q = [head];
+    let current = null;
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] === null) {
+            current = q.shift();
+            continue;
+        }
+        const newNode = new Node(arr[i]);
+        current.children.push(newNode);
+        q.push(newNode);
+    }
+    return head;
+}
+
+/**
+ * 
+ * @param {number} val 
  * @param {ListNode} next 
  */
 function ListNode(val, next) {
@@ -62,13 +89,13 @@ function array2TreeNode(array) {
  * @returns {ListNode}
  */
 function array2ListNode(array) {
-    if (array === null) {return null;}
-    if (array === undefined) {return undefined;}
-    if (array.length === 0) {return null;}
+    if (array === null) { return null; }
+    if (array === undefined) { return undefined; }
+    if (array.length === 0) { return null; }
 
     const head = new ListNode(array[0]);
     let current = head;
-    for(let i = 1; i<array.length;i++) {
+    for (let i = 1; i < array.length; i++) {
         current.next = new ListNode(array[i]);
         current = current.next;
     }
@@ -90,9 +117,7 @@ function listNode2Array(head) {
 }
 
 module.exports = {
-    ListNode,
-    TreeNode,
-    array2TreeNode,
-    array2ListNode,
-    listNode2Array
+    Node, array2Node,
+    ListNode, array2ListNode, listNode2Array,
+    TreeNode, array2TreeNode,
 }
