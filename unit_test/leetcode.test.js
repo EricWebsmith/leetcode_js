@@ -1,7 +1,7 @@
 // put it to test/ when using.
 const { expect } = require("chai");
 const _ = require('lodash');
-const { Node, array2Node, ListNode, TreeNode, array2TreeNode, array2ListNode, listNode2Array } = require('../leetcode')
+const { Node, array2Node, ListNode, array2ListNode, listNode2Array, TreeNode, array2TreeNode, treeNode2Array } = require('../leetcode')
 
 describe('Node', () => {
 
@@ -113,4 +113,22 @@ describe('Node', () => {
         expect(actual).to.be.null;
     });
 
+});
+
+describe.only('TreeNode', () => {
+
+    it('TreeNode 1', () => {
+        const expected = []
+        const root = array2TreeNode(expected);
+        const actual = treeNode2Array(root);
+        expect(actual).to.be.eql(expected);
+    });
+
+
+    it('TreeNode 2', () => {
+        const expected = [1,0,2]
+        const root = array2TreeNode(expected);
+        const actual = treeNode2Array(root);
+        expect(actual).to.be.eql(expected);
+    });
 });

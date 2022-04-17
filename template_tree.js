@@ -1,14 +1,15 @@
 const { expect } = require("chai");
 const _ = require('lodash');
-const { ListNode, array2ListNode, listNode2Array, TreeNode, array2TreeNode, treeNode2Array } = require('../leetcode')
+const { TreeNode, array2TreeNode, treeNode2Array } = require('../leetcode')
 
-function func () {
+function func (root) {
 
 }
 
-function test(expected, ...args) {
-    const actual = func (...args);
-    if (actual !== expected) {
+function test(rootArray, expected) {
+    const root = array2TreeNode(rootArray);
+    const actual = func (root);
+    if (actual.toString() !== expected.toString()) {
         console.log(actual, expected);
     }
     expect(actual).to.be.eql(expected);

@@ -48,6 +48,34 @@ function TreeNode(val, left, right) {
 }
 
 /**
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+function treeNode2Array (root) {
+    if (root === null) {return [];}
+    const q = [root];
+    const ans = [];
+    while(q.length > 0) {
+        const node = q.shift();
+        if (node){
+            ans.push(node.val);
+            q.push(node.left);
+            q.push(node.right);
+        } else {
+            ans.push(null);
+        }
+    }
+
+    while(ans[ans.length-1] === null) {
+        ans.pop();
+    }
+
+    return ans;
+}
+
+/**
  * Decodes your encoded data to tree.
  *
  * @param {string} array
@@ -119,5 +147,5 @@ function listNode2Array(head) {
 module.exports = {
     Node, array2Node,
     ListNode, array2ListNode, listNode2Array,
-    TreeNode, array2TreeNode,
+    TreeNode, array2TreeNode, treeNode2Array
 }

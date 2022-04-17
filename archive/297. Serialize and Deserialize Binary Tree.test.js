@@ -1,7 +1,6 @@
 const { expect } = require("chai");
 const _ = require('lodash');
 
-
 function TreeNode(val) {
     this.val = val;
     this.left = this.right = null;
