@@ -80,7 +80,7 @@ describe('380. Insert Delete GetRandom O(1)', () => {
         [null, true, false, true, 2, true, false, 2]
     )});
     
-    it('2', () => {test(
+    it('380. 2', () => {test(
         ["RandomizedSet","insert","insert","remove","insert","remove","getRandom"],
         [[],[0],[1],[0],[2],[1],[]],
         [null,true,true,true,true,true,2]
