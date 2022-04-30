@@ -1,13 +1,25 @@
+const { Queue } = require('@datastructures-js/queue');
+
+/*
+array2Node and node2Array is one of the leetcode questions: 
+428. Serialize and Deserialize N-ary Tree
+*/
+
 /**
  * 
  * @param {number} val 
  * @param {Node[]} children 
  */
-function Node(val, children = []) {
+function Node(val, children) {
     this.val = val;
     this.children = children;
 }
 
+/**
+ * 
+ * @param {number[]} arr 
+ * @returns {Node}
+ */
 function array2Node(arr) {
     if (!arr || arr.length === 0) {return null;}
     const head = new Node(arr[0]);
@@ -23,6 +35,35 @@ function array2Node(arr) {
         q.push(newNode);
     }
     return head;
+}
+
+/**
+ * 
+ * @param {Node} root 
+ * @returns {number[]}
+ */
+function node2Array(root) {
+    if (!root) { return [];}
+    const arr = [root.val];
+    const q = new Queue([root]);
+    while (!q.isEmpty()) {
+        const qSize = q.size();
+        for (let i = 0; i < qSize; i++) {
+            const node = q.dequeue();
+            arr.push(null);
+            for (const child of node.children) {
+                arr.push(child.val);
+                q.enqueue(child);
+            }
+        }
+    }
+
+    //trim end
+    while(arr[arr.length-1] === null){
+        arr.pop();
+    }
+
+    return arr;
 }
 
 /**
@@ -145,7 +186,7 @@ function listNode2Array(head) {
 }
 
 module.exports = {
-    Node, array2Node,
+    Node, array2Node, node2Array,
     ListNode, array2ListNode, listNode2Array,
     TreeNode, array2TreeNode, treeNode2Array
 }

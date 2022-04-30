@@ -115,7 +115,7 @@ describe('Node', () => {
 
 });
 
-describe.only('TreeNode', () => {
+describe('TreeNode', () => {
 
     it('TreeNode 1', () => {
         const expected = []
