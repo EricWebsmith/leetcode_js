@@ -14,10 +14,6 @@ class MyStack {
      * @return {void}
      */
     push(x) {
-        if (this.isPop) {
-            this.switch();
-        }
-
         this.queue2.enqueue(x);
         while (this.queue1.size() > 0) {
             this.queue2.enqueue(this.queue1.dequeue());
