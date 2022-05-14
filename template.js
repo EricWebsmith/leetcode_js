@@ -7,7 +7,8 @@ function func () {
 
 }
 
-function test(expected, ...args) {
+function test(...args) {
+    const expected = args.pop();
     const actual = func (...args);
     if (actual !== expected) {
         console.log(actual, expected);

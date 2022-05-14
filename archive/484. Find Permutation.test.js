@@ -37,10 +37,10 @@ function test(...args) {
     expect(actual).to.be.eql(expected);
 }
 
-describe('-------------', () => {
-    it('1', () => {test("I", [1,2])});
-    it('2', () => {test("DI", [2,1,3])});
-    it('3', () => {test("DDDD", [5,4,3,2,1])});
+describe('484. Find Permutation', () => {
+    it('484. 1', () => {test("I", [1,2])});
+    it('484. 2', () => {test("DI", [2,1,3])});
+    it('484. 3', () => {test("DDDD", [5,4,3,2,1])});
 });
 
 
