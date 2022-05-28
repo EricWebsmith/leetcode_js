@@ -1,13 +1,5 @@
 const { expect } = require("chai");
 
-function getMid(left, right) {
-    if (right - left & 1 === 1) {
-        return left + (right - left - 1) / 2;
-    } else {
-        return left + (right - left) / 2;
-    }
-}
-
 /**
  * @param {number[]} nums
  * @return {number}
