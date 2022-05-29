@@ -1,7 +1,4 @@
 const { expect } = require("chai");
-const _ = require('lodash');
-const { Queue } = require('@datastructures-js/queue');
-const { Node, array2Node, node2Array, ListNode, array2ListNode, listNode2Array, TreeNode, array2TreeNode, treeNode2Array } = require('../leetcode')
 
 /**
  * @param {string[]} messages
@@ -21,6 +18,7 @@ function largestWordCount (messages, senders) {
     let ans = senders[0];
     let maxCount = 0;
     for (const key of Object.keys(obj)) {
+        console.log(key);
         if (obj[key] > maxCount) {
             maxCount = obj[key];
             ans = key;
