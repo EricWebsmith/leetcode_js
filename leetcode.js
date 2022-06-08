@@ -178,7 +178,9 @@ function array2ListNode(array) {
 function listNode2Array(head) {
     const array = [];
     let current = head;
-    while (current) {
+    array.push(current.val);
+    current = current.next;
+    while (current && current!==head) {
         array.push(current.val);
         current = current.next;
     }
