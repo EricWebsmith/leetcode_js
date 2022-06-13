@@ -1,4 +1,7 @@
 /.vscode
 node_modules/
+__pycache__/
 coverage/
 .nyc_output/
+config.py
+scrap_config.py
