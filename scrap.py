@@ -1,8 +1,8 @@
 # install:
-# 
+#
 # pip install python-leetcode
-# 
-# url: https://pypi.org/project/python-leetcode/ 
+#
+# url: https://pypi.org/project/python-leetcode/
 #
 # use:
 # ```
@@ -17,7 +17,6 @@
 # ```
 
 
-import os
 import sys
 import leetcode
 import leetcode.auth
@@ -34,8 +33,10 @@ title_slug = title_slug.replace('https://leetcode.com/problems/', '')
 title_slug = title_slug.replace('/', '')
 
 question_type = ''
-if len(sys.argv)>=3:
+if len(sys.argv) >= 3:
     question_type = sys.argv[2]
+
+
 def get_api_instance(leetcode_session, csrf_token):
     csrf_token = leetcode.auth.get_csrf_cookie(leetcode_session)
 
@@ -50,7 +51,9 @@ def get_api_instance(leetcode_session, csrf_token):
     api_instance = leetcode.DefaultApi(leetcode.ApiClient(configuration))
     return api_instance
 
+
 api_instance = get_api_instance(leetcode_session, csrf_token)
+
 
 def get_detail(title_slug):
     graphql_request = leetcode.GraphqlQuery(
@@ -72,6 +75,7 @@ def get_detail(title_slug):
     result = api_instance.graphql_post(body=graphql_request)
     return result.data.question
 
+
 question = get_detail(title_slug)
 
 question_id = question.question_frontend_id
@@ -85,6 +89,7 @@ elif question_type == '':
 code_definitions = json.loads(question.code_definition)
 javascript = [d for d in code_definitions if d['value'] == 'javascript'][0]
 
+
 def get_code_snippet(javascript_code):
     varAt = javascript_code.find('var ')
     equalAt = javascript_code.find(' = ')
@@ -94,9 +99,11 @@ def get_code_snippet(javascript_code):
         javascript_code = javascript_code.replace('var', 'function')
     return function_name, javascript_code
 
-function_name, javascript_code = get_code_snippet(javascript['defaultCode'])    
+
+function_name, javascript_code = get_code_snippet(javascript['defaultCode'])
 
 html = etree.HTML(question.content)
+
 
 def get_params(tc):
     tc_string = tc.xpath('string()')
@@ -110,17 +117,18 @@ def get_params(tc):
     while '=' in inputString:
         equalAt = inputString.find('=')
         commaAt = equalAt - 1
-        while commaAt>0:
+        while commaAt > 0:
             if inputString[commaAt] == ',':
                 break
-            commaAt-=1
-        inputString = inputString[:commaAt] +', ' +  inputString[equalAt+1:]
+            commaAt -= 1
+        inputString = inputString[:commaAt] + ', ' + inputString[equalAt+1:]
     # get output
     explanationAt = tc_string.find('Explanation')
     outputString = tc_string[outputAt+6:explanationAt]
     outputString = outputString.strip(':')
     outputString = outputString.strip()
     return inputString+', '+outputString
+
 
 def get_test_case_code(html):
     test_cases = html.xpath("//pre")
@@ -129,6 +137,8 @@ def get_test_case_code(html):
         params = get_params(tc)
         test_case_string = f"{test_case_string}\n    it('{question_id}. {i+1}', () => {{test({params})}});"
     return test_case_string
+
+
 test_case_string = get_test_case_code(html)
 
 test_function_code = ''
@@ -153,11 +163,11 @@ else:
         method_name_set.add(method_names[i].strip())
     case_code = ''
     for method_name in method_name_set:
-        case_code+=f"""            case '{method_name}':
+        case_code += f"""            case '{method_name}':
                 expect(obj.{method_name}(...params[i])).to.be.eql(expected[i]);
                 break;
 """
-    
+
     test_function_code = f"""/**
  * 
  * @param {{string[]}} actions 
