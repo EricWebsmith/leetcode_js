@@ -36,11 +36,14 @@ class Scraper {
         const question = result.data.data.question;
         this.id = question.questionFrontendId;
         this.title = question.title;
-        if (this.type === '' && this.title.startsWith('Design')) {
-            this.type = 'Design';
-        } else {
-            this.type = 'Common';
+        if (this.type ==='') {
+            if (this.title.startsWith('Design')) {
+                this.type = 'Design';
+            } else  {
+                this.type = 'Common';
+            }
         }
+
         this.content = question.content;
         this.codeDefinition = question.codeDefinition;
     }
@@ -76,8 +79,8 @@ class Scraper {
             let actionCode = '';
             for (const action of actionSet.values()) {
                 actionCode += `
-            case 'move':
-                expect(obj.move(...params[i])).to.be.eql(expected[i]);
+            case '${action}':
+                expect(obj.${action}(...params[i])).to.be.eql(expected[i]);
                 break;`;
             }
 
@@ -178,7 +181,6 @@ ${this.testCaseCode}
         this.parseFunctionCode();
         this.parseTestCaseCode();
         this.parseTestFunctionCode();
-
         this.parseCode();
         await this.writeFile();
     }
