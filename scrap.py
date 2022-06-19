@@ -114,6 +114,7 @@ def get_params(tc):
     inputString = tc_string[inputAt+5:outputAt]
     inputString = inputString.strip(':')
     inputString = inputString.strip()
+    inputString = inputString.strip('\n')
     inputString = inputString.replace('\n', ', ')
     while '=' in inputString:
         equalAt = inputString.find('=')
@@ -123,6 +124,8 @@ def get_params(tc):
                 break
             commaAt -= 1
         inputString = inputString[:commaAt] + ', ' + inputString[equalAt+1:]
+    inputString = inputString.strip(',')
+    inputString = inputString.strip()
     # get output
     explanationAt = tc_string.find('Explanation')
     outputString = tc_string[outputAt+6:explanationAt]
@@ -176,7 +179,7 @@ else:
  * @param {{Array}} expected 
  */
 function test(actions, params, expected) {{
-    const obj = new {class_name}();
+    const obj = new {class_name}(...params[0]);
     for (let i=1;i<actions.length;i++) {{
         switch(actions[i]) {{
 {case_code}
