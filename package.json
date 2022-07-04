@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "archive": "mv test/* archive/"
   },
   "devDependencies": {
     "eslint": "^8.16.0",
