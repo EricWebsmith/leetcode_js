@@ -176,6 +176,9 @@ function array2ListNode(array) {
  * @param {ListNode} head 
  */
 function listNode2Array(head) {
+    if (head == null) {
+        return [];
+    }
     const array = [];
     let current = head;
     array.push(current.val);
