@@ -36,10 +36,7 @@ var levelOrder = function (root) {
     }
 
     return ans;
-};
-
-
-
+}
 
 /**
  * 

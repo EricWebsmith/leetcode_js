@@ -3,6 +3,13 @@ const { headers } = require('./config');
 const cheerio = require('cheerio');
 const fs = require('fs').promises;
 
+class Parameter {
+    constructor(name, type) {
+        this.name = name;
+        this.type = type;
+    }
+}
+
 class Scraper {
     constructor(titleSlug, type) {
         this.title = '';
@@ -13,6 +20,8 @@ class Scraper {
         this.content = '';
         this.functoinCode = '';
         this.functionName = '';
+        this.functionParams = [];
+        this.functionReturnType = '';
         this.testFunctionCode = '';
         this.code = '';
         this.testCases = [];
@@ -48,21 +57,44 @@ class Scraper {
         this.codeDefinition = question.codeDefinition;
     }
 
-    parseFunctionCode() {
-        const codeDefinitionArray = JSON.parse(this.codeDefinition);
+    removeDefinitionFor(javascript) {
+        const definitionForAt = javascript.indexOf('* Definition for');
+        if (definitionForAt<0) {
+            return;
+        }
 
-        /**
-         * @type {string}
-         */
-        const javascriptObj = codeDefinitionArray.find(d => d.value == 'javascript');
-        const javascript = javascriptObj.defaultCode;
-        const varAt = javascript.indexOf('var');
-        const equalAt = javascript.indexOf(' = ');
-        this.functionName = javascript.substring(varAt + 4, equalAt);
-        this.functionCode = javascript;
+        const endAt = javascript.indexOf("*/") ;
+        const result = javascript.substring(endAt+2);
+        return result;
     }
 
-    parseTestFunctionCode() {
+    parseFunctionCode() {
+        const codeDefinitionArray = JSON.parse(this.codeDefinition);
+        const javascriptObj = codeDefinitionArray.find(d => d.value == 'javascript');
+        let javascript = javascriptObj.defaultCode;
+        javascript = this.removeDefinitionFor(javascript);
+        const varAt = javascript.indexOf('var');
+        const equalAt = javascript.indexOf(' = ');
+        this.functionName = javascript.substring(varAt + 4, equalAt).trim();
+        this.functionCode = javascript;
+        let paramAt = javascript.indexOf('@param');
+        while(paramAt>0) {
+            const openAt = javascript.indexOf('{', paramAt);
+            const closeAt = javascript.indexOf('}', openAt);
+            const paramType = javascript.substring(openAt+1, closeAt);
+            const newLineAt = javascript.indexOf('\n', closeAt);
+            const paramName = javascript.substring(closeAt+1, newLineAt).trim();
+            const param = new Parameter(paramName, paramType);
+            this.functionParams.push(param);
+            paramAt = javascript.indexOf('@param', paramAt+1);
+        }
+        const returnAt = javascript.indexOf('@return', paramAt);
+        const returnOpenAt = javascript.indexOf('{', returnAt);
+        const returnCloseAt = javascript.indexOf('}', returnAt);
+        this.functionReturnType = javascript.substring(returnOpenAt+1, returnCloseAt);
+    }
+
+    generateTestFunctionCode() {
         if (this.type === 'Design') {
             let input = this.testCases[0].input;
             const openAt = input.indexOf('[');
@@ -96,10 +128,45 @@ ${actionCode}
     }
 }`;
         } else {
+            let functionParamStr = '';
+            let testParamStr = '';
+            let convertingStatements = '';
+            for(const param of this.functionParams) {
+                if(param.type === 'Node') {
+                    testParamStr+=param.name+'Arr, ';
+                    convertingStatements+=`    const ${param.name} = array2Node(${param.name}Arr);\n`;
+                } else if(param.type === 'TreeNode') {
+                    testParamStr+=param.name+'Arr, ';
+                    convertingStatements+=`    const ${param.name} = array2TreeNode(${param.name}Arr);\n`;
+                } else if(param.type === 'ListNode') {
+                    testParamStr+=param.name+'Arr, ';
+                    convertingStatements+=`    const ${param.name} = array2ListNode(${param.name}Arr);\n`;
+                } else {
+                    testParamStr+=param.name+', ';
+                }
+                functionParamStr+=param.name+', ';
+            }
+            convertingStatements = convertingStatements.trim();
+            functionParamStr = functionParamStr.trim().replace(/,$/, '');
+            testParamStr+='expected';
+
+            let actualStatements = '';
+            if (this.functionReturnType === 'Node') {
+                actualStatements = `const actualHead = ${this.functionName}(${functionParamStr});\n    const actual = node2Array(actualHead)`;
+            } else if (this.functionReturnType === 'TreeNode') {
+                actualStatements = `const actualHead = ${this.functionName}(${functionParamStr});\n    const actual = treeNode2Array(actualHead)`;
+            } else if (this.functionReturnType === 'ListNode') {
+                actualStatements = `const actualHead = ${this.functionName}(${functionParamStr});\n    const actual = listNode2Array(actualHead)`;
+            } else {
+                actualStatements = `const actual = ${this.functionName}(${functionParamStr});`;
+            }
+
+            actualStatements = actualStatements.trim();
+
             this.testFunctionCode = `
-function test(...args) {
-    const expected = args.pop();
-    const actual = ${this.functionName} (...args);
+function test(${testParamStr}) {
+    ${convertingStatements}
+    ${actualStatements}
     if (actual !== expected) {
         console.log(actual, expected);
     }
@@ -109,12 +176,11 @@ function test(...args) {
     }
 
     parseTestCaseCode() {
-        // this is shadowed by cheerio
+        // "this" is shadowed by cheerio
         const self = this;
         const $ = cheerio.load(self.content);
         const pres = $("pre");
         pres.each(function (idx, el) {
-            console.log($(el).text());
             const tcStr = $(el).text();
             const inputAt = tcStr.indexOf('Input');
             if (inputAt < 0) {
@@ -154,7 +220,7 @@ function test(...args) {
         }
     }
 
-    parseCode() {
+    generateCode() {
         this.code = `
 const { expect } = require("chai");
 const _ = require('lodash');
@@ -169,7 +235,7 @@ describe('${this.id}. ${this.title}', () => {
 ${this.testCaseCode}   
 });
 `
-        console.log(this.code);
+        //console.log(this.code);
     }
 
     async writeFile() {
@@ -180,8 +246,8 @@ ${this.testCaseCode}
         await this.scrapQuestion();
         this.parseFunctionCode();
         this.parseTestCaseCode();
-        this.parseTestFunctionCode();
-        this.parseCode();
+        this.generateTestFunctionCode();
+        this.generateCode();
         await this.writeFile();
     }
 }
