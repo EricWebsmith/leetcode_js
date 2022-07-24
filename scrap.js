@@ -60,7 +60,7 @@ class Scraper {
     removeDefinitionFor(javascript) {
         const definitionForAt = javascript.indexOf('* Definition for');
         if (definitionForAt<0) {
-            return;
+            return javascript;
         }
 
         const endAt = javascript.indexOf("*/") ;
@@ -72,6 +72,7 @@ class Scraper {
         const codeDefinitionArray = JSON.parse(this.codeDefinition);
         const javascriptObj = codeDefinitionArray.find(d => d.value == 'javascript');
         let javascript = javascriptObj.defaultCode;
+        console.log(javascript);
         javascript = this.removeDefinitionFor(javascript);
         const varAt = javascript.indexOf('var');
         const equalAt = javascript.indexOf(' = ');
@@ -92,6 +93,9 @@ class Scraper {
         const returnOpenAt = javascript.indexOf('{', returnAt);
         const returnCloseAt = javascript.indexOf('}', returnAt);
         this.functionReturnType = javascript.substring(returnOpenAt+1, returnCloseAt);
+        // replace `var funcName = function()` to `function funcName`
+        this.functionCode = this.functionCode.replace(/var ([a-zA-Z]+) = function/, 'function $1');
+        this.functionCode = this.functionCode.replace('};', '}');
     }
 
     generateTestFunctionCode() {
