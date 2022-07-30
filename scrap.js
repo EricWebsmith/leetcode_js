@@ -72,7 +72,6 @@ class Scraper {
         const codeDefinitionArray = JSON.parse(this.codeDefinition);
         const javascriptObj = codeDefinitionArray.find(d => d.value == 'javascript');
         let javascript = javascriptObj.defaultCode;
-        console.log(javascript);
         javascript = this.removeDefinitionFor(javascript);
         const varAt = javascript.indexOf('var');
         const equalAt = javascript.indexOf(' = ');
@@ -239,7 +238,6 @@ describe('${this.id}. ${this.title}', () => {
 ${this.testCaseCode}   
 });
 `
-        //console.log(this.code);
     }
 
     async writeFile() {
@@ -268,7 +266,7 @@ if (process.argv.length >= 4) {
 }
 const scraper = new Scraper(titleSlug, type);
 scraper.process().then(result => {
-    //console.log(result);
+    console.log('done');
 }).catch(err => {
     console.log(err);
 })
