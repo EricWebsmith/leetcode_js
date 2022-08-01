@@ -115,7 +115,7 @@ class Scraper {
             for (const action of actionSet.values()) {
                 actionCode += `
             case '${action}':
-                expect(obj.${action}(...params[i])).to.be.eql(expected[i]);
+                expect(obj.${action}(...params[i])??null).to.be.eql(expected[i]);
                 break;`;
             }
 
