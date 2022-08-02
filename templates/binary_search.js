@@ -1,20 +1,52 @@
 /**
- * See 1760
+ * int array
+ * [T,T,T...F,F,F]
+ * find the first F.
  * @param {number} left 
  * @param {number} right 
  * @param {function} condition
  * @returns 
  */
- function binarySearchSmallest(left, right, condition) {
-     // add 1 to right if condition may not meet.
+function binarySearchFirst(left, right, condition) {
+    // add 1 to right if condition may not meet.
     while (left < right) {
         const mid = left + Math.floor((right - left) / 2);
         if (condition(mid)) {
-            right = mid;
+            left = mid + 1;            
         } else {
-            left = mid + 1;
+            right = mid;
         }
 
     }
     return left;
 }
+
+function bisectRight(a, x, lo=0, hi = a.length) {
+    while (lo < hi) {
+        const mid = (lo + hi) >>> 1;
+        if (a[mid]<=x) {
+            lo = mid+1;
+        } else {
+            hi = mid;
+        }
+    }
+    return lo;
+}
+
+function bisectLeft(a, x, lo=0, hi = a.length) {    
+    while (lo < hi) {
+        const mid = (lo + hi) >>> 1;
+        if (a[mid]<x) {
+            lo = mid+1;
+        } else {
+            hi = mid;
+        }
+    }
+    return lo;
+}
+
+[T, T, T, T, F, F, F]
+
+
+bisect_left
+bisect_right
