@@ -21,18 +21,6 @@ function binarySearchFirst(left, right, condition) {
     return left;
 }
 
-function bisectRight(a, x, lo=0, hi = a.length) {
-    while (lo < hi) {
-        const mid = (lo + hi) >>> 1;
-        if (a[mid]<=x) {
-            lo = mid+1;
-        } else {
-            hi = mid;
-        }
-    }
-    return lo;
-}
-
 function bisectLeft(a, x, lo=0, hi = a.length) {    
     while (lo < hi) {
         const mid = (lo + hi) >>> 1;
@@ -45,8 +33,14 @@ function bisectLeft(a, x, lo=0, hi = a.length) {
     return lo;
 }
 
-[T, T, T, T, F, F, F]
-
-
-bisect_left
-bisect_right
+function bisectRight(a, x, lo=0, hi = a.length) {
+    while (lo < hi) {
+        const mid = (lo + hi) >>> 1;
+        if (a[mid]<=x) {
+            lo = mid+1;
+        } else {
+            hi = mid;
+        }
+    }
+    return lo;
+}
