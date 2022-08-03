@@ -3,7 +3,7 @@
  * @param {string[]} equations
  * @return {boolean}
  */
- function aaaaaaaaa (equations) {
+function aaaaaaaaa(equations) {
     const map = new Map();
 
     /**
@@ -54,6 +54,4 @@
 
         reverseMap.get(value).push(key);
     }
-
-
 }
