@@ -1,7 +1,7 @@
 const axios = require('axios').default;
-const { headers } = require('./config');
 const cheerio = require('cheerio');
 const fs = require('fs').promises;
+require('dotenv').config()
 
 class Parameter {
     constructor(name, type) {
@@ -12,6 +12,7 @@ class Parameter {
 
 class Scraper {
     constructor(titleSlug, type) {
+        this.headers = {};
         this.title = '';
         this.id = '';
         this.titleSlug = titleSlug;
@@ -28,6 +29,15 @@ class Scraper {
         this.testCaseCode = '';
     }
 
+    buildHeaders() {
+        this.headers = {
+            'referer': 'https://leetcode.com',
+            'x-csrftoken': process.env.X_CSRFTOKEN,
+            'Cookies': process.env.COOKIES,
+            'Content-Type': 'application/json'
+        }
+    }
+
     async scrapQuestion() {
         const data = {
             "query": "\n            query getQuestionDetail($titleSlug: String!) {\n              question(titleSlug: $titleSlug) {\n                questionFrontendId\n                title\n                content\n                codeDefinition\n              }\n            }\n        ",
@@ -39,7 +49,7 @@ class Scraper {
 
         const result = await axios.post(
             'https://leetcode.com/graphql',
-            data, { headers }
+            data, { headers: this.headers }
         );
 
         const question = result.data.data.question;
@@ -245,6 +255,7 @@ ${this.testCaseCode}
     }
 
     async process() {
+        this.buildHeaders();
         await this.scrapQuestion();
         this.parseFunctionCode();
         this.parseTestCaseCode();
