@@ -1,4 +1,4 @@
-
+const _ = require('lodash');
 
 /**
  * @param {number[]} nums1
