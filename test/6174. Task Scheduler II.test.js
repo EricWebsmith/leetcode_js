@@ -13,24 +13,24 @@ function taskSchedulerII(tasks, space) {
     const n = tasks.length;
     const map = new Map();
     let idle = 0;
-    for(let i=0;i<n;i++) {
-        
-        if(map.has(tasks[i])) {
+    for (let i = 0; i < n; i++) {
+
+        if (map.has(tasks[i])) {
             const previous = map.get(tasks[i]);
             const distance = i + idle - previous - 1;
-            if (distance<space) {
+            if (distance < space) {
                 idle += space - distance;
             }
         }
-        map.set(tasks[i], i+idle);
+        map.set(tasks[i], i + idle);
     }
 
-    return n+idle;
+    return n + idle;
 }
 
 
 function test(tasks, space, expected) {
-    
+
     const actual = taskSchedulerII(tasks, space);
     if (actual !== expected) {
         console.log(actual, expected);
@@ -39,7 +39,7 @@ function test(tasks, space, expected) {
 }
 
 describe('6174. Task Scheduler II', () => {
-    it('6174. 1', () => {test( [1,2,1,2,3,1], 3,  9)});
-    it('6174. 2', () => {test( [5,8,8,5], 2,  6)});
-    it('6174. 3', () => {test( [4,10,10,9,10,4,10,4], 8, 30)});
+    it('6174. 1', () => { test([1, 2, 1, 2, 3, 1], 3, 9) });
+    it('6174. 2', () => { test([5, 8, 8, 5], 2, 6) });
+    it('6174. 3', () => { test([4, 10, 10, 9, 10, 4, 10, 4], 8, 30) });
 });
