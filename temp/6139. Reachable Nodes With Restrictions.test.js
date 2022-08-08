@@ -16,9 +16,9 @@ function reachableNodes(n, edges, restricted) {
         map.push([]);
     }
 
-    for (const edge of edges) {
-        map[edge[0]].push(edge[1]);
-        map[edge[1]].push(edge[0]);
+    for (const [a, b] of edges) {
+        map[a].push(b);
+        map[b].push(a);
     }
 
     const visited = new Array(n).fill(0);
