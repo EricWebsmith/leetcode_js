@@ -27,7 +27,7 @@ function bisectLeft(array, x) {
  * @param {number[]} nums
  * @return {number}
  */
-function lengthOfLIS_(nums) {
+function lengthOfLIS(nums) {
     const n = nums.length;
     const ans = [nums[0]];
     for (let i = 1; i < n; i++) {
@@ -43,24 +43,6 @@ function lengthOfLIS_(nums) {
     }
 
     return ans.length;
-}
-
-/**
- * @param {number[]} nums
- * @return {number}
- */
-function lengthOfLIS(nums) {
-    const n = nums.length;
-    const dp = new Array(n).fill(1);
-
-    for (let i = 1; i < n; i++) {
-        for (let j = 0; j < i; j++) {
-            if (nums[j] < nums[i]) {
-                dp[i] = Math.max(dp[i], dp[j] + 1);
-            }
-        }
-    }
-    return _.max(dp);
 }
 
 
@@ -79,3 +61,9 @@ describe('300. Longest Increasing Subsequence', () => {
     it('300. 3', () => { test([7, 7, 7, 7, 7, 7, 7], 1) });
 
 });
+
+
+/*
+Runtime: 87 ms, faster than 93.25% of JavaScript online submissions for Longest Increasing Subsequence.
+Memory Usage: 43.1 MB, less than 92.44% of JavaScript online submissions for Longest Increasing Subsequence.
+*/

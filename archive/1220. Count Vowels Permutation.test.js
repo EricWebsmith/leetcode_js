@@ -43,40 +43,37 @@ function countVowelPermutation(n) {
     const i = 2;
     const o = 3;
     const u = 4;
-    const MODULE = 1000000007;
+    const mod = 1e9+7;
 
     let currentBag = new Array(5).fill(1);
     for (let j=2;j<=n;j++) {
         let newBag = new Array(5).fill(0);
         // a 
-        newBag[e] += currentBag[a] % MODULE;
+        newBag[e] += currentBag[a] % mod;
         // e
-        newBag[a] += currentBag[e] % MODULE;
-        newBag[i] += currentBag[e] % MODULE;
+        newBag[a] += currentBag[e] % mod;
+        newBag[i] += currentBag[e] % mod;
         // i
-        newBag[a] += currentBag[i] % MODULE;
-        newBag[e] += currentBag[i] % MODULE;
-        newBag[o] += currentBag[i] % MODULE;
-        newBag[u] += currentBag[i] % MODULE;
+        newBag[a] += currentBag[i] % mod;
+        newBag[e] += currentBag[i] % mod;
+        newBag[o] += currentBag[i] % mod;
+        newBag[u] += currentBag[i] % mod;
         // o
-        newBag[i] += currentBag[o] % MODULE;
-        newBag[u] += currentBag[o] % MODULE;
+        newBag[i] += currentBag[o] % mod;
+        newBag[u] += currentBag[o] % mod;
         // u
-        newBag[a] += currentBag[u] % MODULE;
+        newBag[a] += currentBag[u] % mod;
 
         currentBag = newBag;
     }
-    console.log(currentBag);
-    return _.sum(currentBag) % MODULE;;
+
+    return _.sum(currentBag) % mod;;
 }
 
 
 function test(n, expected) {
     
     const actual = countVowelPermutation(n);
-    if (actual !== expected) {
-        console.log(actual, expected);
-    }
     expect(actual).to.be.eql(expected);
 }
 
