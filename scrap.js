@@ -269,7 +269,7 @@ let titleSlug = 'design-tic-tac-toe';
 let type = '';
 if (process.argv.length >= 3) {
     titleSlug = process.argv[2];
-    titleSlug = titleSlug.replace('https://leetcode.com/problems/', '');
+    titleSlug = titleSlug.replace(/https:\/\/leetcode.(com|cn)\/problems\//, '');
     titleSlug = titleSlug.replace(/https:\/\/leetcode.com\/contest\/weekly-contest-\d+\/problems\//, '');
     titleSlug = titleSlug.replace('/', '');
 }

@@ -1,3 +1,10 @@
+# How do I use scrap.js?
+Open the following url from chrome to check the following two variable
+
+> chrome://settings/cookies/detail?site=leetcode.com
+
+Open your `.env` file, Copy LEETCODE and 
+
 # Array
 for an array, pop/push is faster than shift/unshift. Because of re-indexing.
 
