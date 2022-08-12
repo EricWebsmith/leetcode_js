@@ -3,7 +3,14 @@ Open the following url from chrome to check the following two variable
 
 > chrome://settings/cookies/detail?site=leetcode.com
 
-Open your `.env` file, Copy LEETCODE and 
+Open your `.env` file, Copy CSRFTOKEN and COOKIES
+
+My .env is like that:
+
+```bash
+X_CSRFTOKEN="vRWCSGGEA5El...rzGApbxbGcviJ"
+COOKIES="csrftoken=vRWCSGGEA5El.....x8mPT3jV9hgiQ"
+```
 
 # Array
 for an array, pop/push is faster than shift/unshift. Because of re-indexing.
