@@ -1,5 +1,3 @@
-
-const { Queue } = require("@datastructures-js/queue");
 const { expect } = require("chai");
 const _ = require('lodash');
 
@@ -24,17 +22,26 @@ function ladderLength(beginWord, endWord, wordList) {
     const wordLength = wordList[0].length;
     const edges = wordList.map(word => []);
 
-    for (let i = 0; i < n - 1; i++) {
-        for (let j = i + 1; j < n; j++) {
-            let diff = 0;
-            for (let k = 0; k < wordLength; k++) {
-                if (wordList[i][k] !== wordList[j][k]) {
-                    diff++;
-                }
+    const groupWordMap = new Map();
+
+    wordList.forEach((word, wordIndex) => {
+        for (let i = 0; i < wordLength; i++) {
+            const pattern = word.substring(0, i) + '*' + word.substring(i + 1);
+            if (!groupWordMap.has(pattern)) {
+                groupWordMap.set(pattern, []);
             }
-            if (diff <= 1) {
-                edges[i].push(j);
-                edges[j].push(i);
+            groupWordMap.get(pattern).push(wordIndex);
+        }
+    });
+
+    for (const group of groupWordMap.values()) {
+        for (let i=0;i<group.length;i++) {
+            for(let j=0;j<group.length;j++) {
+                if(!edges[group[i]].includes(group[j])) {
+                    edges[group[i]].push(group[j]);
+                    edges[group[j]].push(group[i]);
+                }
+                
             }
         }
     }
@@ -52,9 +59,6 @@ function ladderLength(beginWord, endWord, wordList) {
             }
             dp[index] = length;
             for (const next of edges[index]) {
-                // if (dp[next] === MaxWordLength){
-                    
-                // }
                 newCurrent.push(next);
             }
 
@@ -63,9 +67,7 @@ function ladderLength(beginWord, endWord, wordList) {
         length++;
     }
 
-    console.log(dp);
     return dp[endWordIndex] === MaxWordLength ? 0 : dp[endWordIndex];
-
 }
 
 
@@ -85,3 +87,9 @@ describe('127. Word Ladder', () => {
     it('127. 4', () => { test("hot", "dog", ["hot", "dog", "dot"], 3) });
 
 });
+
+
+/*
+Runtime: 150 ms, faster than 96.96% of JavaScript online submissions for Word Ladder.
+Memory Usage: 62.2 MB, less than 34.27% of JavaScript online submissions for Word Ladder.
+*/

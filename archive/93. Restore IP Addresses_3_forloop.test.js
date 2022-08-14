@@ -8,6 +8,7 @@ const _ = require('lodash');
  * @return {string[]}
  */
 function restoreIpAddresses(s) {
+    if (s.length>12) {return [];}
     const cache = new Map();
 
     const validPart = (part) => {
@@ -41,7 +42,6 @@ function restoreIpAddresses(s) {
                 if (!validPart(part4)) {
                     continue;
                 }
-
                 ans.push(`${part1}.${part2}.${part3}.${part4}`);
 
             }
@@ -53,19 +53,14 @@ function restoreIpAddresses(s) {
 
 
 function test(s, expected) {
-
     const actual = restoreIpAddresses(s);
-    if (actual !== expected) {
-        console.log(actual, expected);
-    }
-    expect(actual).to.have.deep.members(expected);
+    expect(actual).to.have.members(expected);
 }
 
 describe('93. Restore IP Addresses', () => {
     it('93. 1', () => { test("25525511135", ["255.255.11.135", "255.255.111.35"]) });
     it('93. 2', () => { test("0000", ["0.0.0.0"]) });
     it('93. 3', () => { test("101023", ["1.0.10.23", "1.0.102.3", "10.1.0.23", "10.10.2.3", "101.0.2.3"]) });
-
 });
 
 /*
