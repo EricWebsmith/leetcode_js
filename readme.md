@@ -39,6 +39,9 @@ var BSTIterator = function (root) {
 
 This is based on `1586. Binary Search Tree Iterator II`
 
+# Similar Problems
+1012, 2376
+
 # Language Support
 https://support.leetcode.com/hc/en-us/articles/360011833974-What-are-the-environments-for-the-programming-languages-
 
