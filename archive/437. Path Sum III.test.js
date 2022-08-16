@@ -58,6 +58,6 @@ describe('437. Path Sum III', () => {
 
 
 /*
-Runtime: 120 ms, faster than 77.42% of JavaScript online submissions for Path Sum III.
-Memory Usage: 63.1 MB, less than 10.97% of JavaScript online submissions for Path Sum III.
+Runtime: 113 ms, faster than 80.53% of JavaScript online submissions for Path Sum III.
+Memory Usage: 61.7 MB, less than 11.31% of JavaScript online submissions for Path Sum III.
 */

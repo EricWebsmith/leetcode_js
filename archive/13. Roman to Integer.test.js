@@ -11,21 +11,21 @@ function romanToInt(s) {
     let iSign = 1;
     let xSign = 1;
     let cSign = 1;
-    for(let i=n-1;i>=0;i--) {
-        switch(s[i]) {
+    for (let i = n - 1; i >= 0; i--) {
+        switch (s[i]) {
             case 'I':
-                ans+=iSign * 1;
+                ans += iSign * 1;
                 break;
             case 'V':
-                ans+=5
+                ans += 5
                 iSign = -1;
                 break;
             case 'X':
-                ans+=xSign*10;
+                ans += xSign * 10;
                 iSign = -1;
                 break;
             case 'L':
-                ans+=50;
+                ans += 50;
                 xSign = -1;
                 break;
             case 'C':
@@ -37,7 +37,7 @@ function romanToInt(s) {
                 cSign = -1;
                 break;
             case 'M':
-                ans+=1000;
+                ans += 1000;
                 cSign = -1;
                 break;
         }
@@ -48,7 +48,7 @@ function romanToInt(s) {
 
 
 function test(s, expected) {
-    
+
     const actual = romanToInt(s);
     if (actual !== expected) {
         console.log(actual, expected);
@@ -57,7 +57,7 @@ function test(s, expected) {
 }
 
 describe('13. Roman to Integer', () => {
-    it('13. 1', () => {test( "III",  3)});
-    it('13. 2', () => {test( "LVIII",  58)});
-    it('13. 3', () => {test( "MCMXCIV",  1994)});
+    it('13. 1', () => { test("III", 3) });
+    it('13. 2', () => { test("LVIII", 58) });
+    it('13. 3', () => { test("MCMXCIV", 1994) });
 });
