@@ -59,7 +59,7 @@ function node2Array(root) {
     }
 
     //trim end
-    while(arr[arr.length-1] === null){
+    while(arr[arr.length-1] == null){
         arr.pop();
     }
 

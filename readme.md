@@ -45,3 +45,11 @@ This is based on `1586. Binary Search Tree Iterator II`
 # Language Support
 https://support.leetcode.com/hc/en-us/articles/360011833974-What-are-the-environments-for-the-programming-languages-
 
+install
+```
+npm install --save @datastructures-js/queue@4.1
+npm install --save @datastructures-js/priority-queue@4.1
+```
+
+
+https://www.npmjs.com/package/@datastructures-js/priority-queue

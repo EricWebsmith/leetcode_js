@@ -180,9 +180,9 @@ ${actionCode}
 function test(${testParamStr}) {
     ${convertingStatements}
     ${actualStatements}
-    if (actual !== expected) {
-        console.log(actual, expected);
-    }
+    //if (actual !== expected) {
+    //    console.log(actual, expected);
+    //}
     expect(actual).to.be.eql(expected);
 }`
         }
@@ -238,6 +238,7 @@ function test(${testParamStr}) {
 const { expect } = require("chai");
 const _ = require('lodash');
 const { Queue } = require('@datastructures-js/queue');
+const { PriorityQueue, MinPriorityQueue, MaxPriorityQueue } = require('@datastructures-js/priority-queue');
 const { Node, array2Node, node2Array, ListNode, array2ListNode, listNode2Array, TreeNode, array2TreeNode, treeNode2Array } = require('../leetcode')
 
 ${this.functionCode}
@@ -269,6 +270,7 @@ let titleSlug = 'design-tic-tac-toe';
 let type = '';
 if (process.argv.length >= 3) {
     titleSlug = process.argv[2];
+    titleSlug = titleSlug.replace('/submissions/', '');
     titleSlug = titleSlug.replace(/https:\/\/leetcode.(com|cn)\/problems\//, '');
     titleSlug = titleSlug.replace(/https:\/\/leetcode.com\/contest\/weekly-contest-\d+\/problems\//, '');
     titleSlug = titleSlug.replace('/', '');
