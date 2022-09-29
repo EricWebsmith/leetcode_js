@@ -32,7 +32,7 @@ class Scraper {
     buildHeaders() {
         this.headers = {
             'referer': 'https://leetcode.com',
-            'x-csrftoken': process.env.X_CSRFTOKEN,
+            'x-csrftoken': process.env.CSRF_TOKEN,
             'Cookies': process.env.COOKIES,
             'Content-Type': 'application/json'
         }

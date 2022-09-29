@@ -1,7 +1,6 @@
+
 const { expect } = require("chai");
-const _ = require('lodash');
-const { Queue } = require('@datastructures-js/queue');
-const { Node, array2Node, node2Array, ListNode, array2ListNode, listNode2Array, TreeNode, array2TreeNode, treeNode2Array } = require('../leetcode')
+
 
 /**
  * @param {number[]} arr
@@ -12,65 +11,47 @@ const { Node, array2Node, node2Array, ListNode, array2ListNode, listNode2Array, 
 function findClosestElements(arr, k, x) {
     const n = arr.length;
     let left = 0;
-    let right = arr.length - 1;
-    let mid = 0;
-    while (left <= right) {
-        mid = left + Math.floor((right - left) / 2);
-        if (arr[mid] === x) {
-            break;
-        } else if (arr[mid] > x) {
-            right = mid - 1;
+    let right = n;
+    while (left < right) {
+        const m = (left + right) >> 1;
+        if(arr[m]<x){
+            left = m + 1;
         } else {
-            left = mid + 1;
+            right = m;
         }
     }
+    left--;
 
-    const ans = [];
-    if (arr[mid] === x) {
-        ans.push(x);
-        left = mid - 1;
-        right = mid + 1;
-    } else {
-        [left, right] = [right, left];
-    }
-
-
-    while (ans.length < k) {
-        if (left === -1) {
-            ans.push(arr[right]);
+    let l = 0;
+    while(l<k) {
+        if (right == n || (left>=0 && x - arr[left] <= arr[right] - x)){
+            left--;
+        } else {
             right++;
-        } else if (right === n) {
-            ans.push(arr[left]);
-            left--;
-        } else if (x - arr[left] <= arr[right] - x) {
-            ans.push(arr[left]);
-            left--;
-        } else {
-            ans.push(arr[right]);
-            right++
         }
+        l++;
     }
-    ans.sort((a, b) => a - b);
-    return ans;
+
+    return arr.slice(left+1, right);
 }
 
-function test(...args) {
-    const expected = args.pop();
-    const actual = findClosestElements(...args);
-    if (actual !== expected) {
-        console.log(actual, expected);
-    }
+
+function test(arr, k, x, expected) {
+
+    const actual = findClosestElements(arr, k, x);
+    //if (actual !== expected) {
+    //    console.log(actual, expected);
+    //}
     expect(actual).to.be.eql(expected);
 }
 
-describe('-------------', () => {
-    it('1', () => { test([1, 2, 3, 4, 5], 4, 3, [1, 2, 3, 4]) });
-    it('2', () => { test([1, 2, 3, 4, 5], 4, -1, [1, 2, 3, 4]) });
-    it.only('3', () => { test([-2, -1, 1, 2, 3, 4, 5], 7, 3, [-2, -1, 1, 2, 3, 4, 5]) });
+describe('658. Find K Closest Elements', () => {
+    it('658. 1', () => { test([1, 2, 3, 4, 5], 4, 3, [1, 2, 3, 4]) });
+    it('658. 2', () => { test([1, 2, 3, 4, 5], 4, -1, [1, 2, 3, 4]) });
+
 });
 
-
 /*
-Runtime: 101 ms, faster than 80.19% of JavaScript online submissions for Find K Closest Elements.
-Memory Usage: 49.7 MB, less than 14.71% of JavaScript online submissions for Find K Closest Elements.
+Runtime: 159 ms, faster than 44.07% of JavaScript online submissions for Find K Closest Elements.
+Memory Usage: 47.7 MB, less than 84.91% of JavaScript online submissions for Find K Closest Elements.
 */
