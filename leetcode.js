@@ -1,14 +1,14 @@
-const { Queue } = require('@datastructures-js/queue');
+const {Queue} = require('@datastructures-js/queue');
 
 /*
-array2Node and node2Array is one of the leetcode questions: 
+array2Node and node2Array is one of the leetcode questions:
 428. Serialize and Deserialize N-ary Tree
 */
 
 /**
- * 
- * @param {number} val 
- * @param {Node[]} children 
+ *
+ * @param {number} val
+ * @param {Node[]} children
  */
 function Node(val, children) {
     this.val = val;
@@ -16,12 +16,14 @@ function Node(val, children) {
 }
 
 /**
- * 
- * @param {number[]} arr 
+ *
+ * @param {number[]} arr
  * @returns {Node}
  */
 function array2Node(arr) {
-    if (!arr || arr.length === 0) {return null;}
+    if (!arr || arr.length === 0) {
+return null;
+}
     const head = new Node(arr[0]);
     const q = [head];
     let current = null;
@@ -38,12 +40,14 @@ function array2Node(arr) {
 }
 
 /**
- * 
- * @param {Node} root 
+ *
+ * @param {Node} root
  * @returns {number[]}
  */
 function node2Array(root) {
-    if (!root) { return [];}
+    if (!root) {
+return [];
+}
     const arr = [root.val];
     const q = new Queue([root]);
     while (!q.isEmpty()) {
@@ -58,8 +62,8 @@ function node2Array(root) {
         }
     }
 
-    //trim end
-    while(arr[arr.length-1] == null){
+    // trim end
+    while (arr[arr.length-1] == null) {
         arr.pop();
     }
 
@@ -67,25 +71,25 @@ function node2Array(root) {
 }
 
 /**
- * 
- * @param {number} val 
- * @param {ListNode} next 
+ *
+ * @param {number} val
+ * @param {ListNode} next
  */
 function ListNode(val, next) {
-    this.val = (val === undefined ? 0 : val)
-    this.next = (next === undefined ? null : next)
+    this.val = (val === undefined ? 0 : val);
+    this.next = (next === undefined ? null : next);
 }
 
 /**
- * 
- * @param {number} val 
- * @param {TreeNode} left 
- * @param {TreeNode} right 
+ *
+ * @param {number} val
+ * @param {TreeNode} left
+ * @param {TreeNode} right
  */
 function TreeNode(val, left, right) {
-    this.val = (val === undefined ? 0 : val)
-    this.left = (left === undefined ? null : left)
-    this.right = (right === undefined ? null : right)
+    this.val = (val === undefined ? 0 : val);
+    this.left = (left === undefined ? null : left);
+    this.right = (right === undefined ? null : right);
 }
 
 /**
@@ -94,13 +98,15 @@ function TreeNode(val, left, right) {
  * @param {TreeNode} root
  * @return {number[]}
  */
-function treeNode2Array (root) {
-    if (root === null) {return [];}
+function treeNode2Array(root) {
+    if (root === null) {
+return [];
+}
     const q = [root];
     const ans = [];
-    while(q.length > 0) {
+    while (q.length > 0) {
         const node = q.shift();
-        if (node){
+        if (node) {
             ans.push(node.val);
             q.push(node.left);
             q.push(node.right);
@@ -109,7 +115,7 @@ function treeNode2Array (root) {
         }
     }
 
-    while(ans[ans.length-1] === null) {
+    while (ans[ans.length-1] === null) {
         ans.pop();
     }
 
@@ -130,7 +136,7 @@ function array2TreeNode(array) {
     const root = new TreeNode(array[0]);
     const q = [root];
     for (let i = 1; i < n; i += 2) {
-        let node = q.shift();
+        const node = q.shift();
 
         let left = null;
         if (array[i] !== null) {
@@ -146,21 +152,26 @@ function array2TreeNode(array) {
             node.right = right;
             q.push(right);
         }
-
     }
 
     return root;
 }
 
 /**
- * 
- * @param {number[]} array 
+ *
+ * @param {number[]} array
  * @returns {ListNode}
  */
 function array2ListNode(array) {
-    if (array === null) { return null; }
-    if (array === undefined) { return undefined; }
-    if (array.length === 0) { return null; }
+    if (array === null) {
+return null;
+}
+    if (array === undefined) {
+return undefined;
+}
+    if (array.length === 0) {
+return null;
+}
 
     const head = new ListNode(array[0]);
     let current = head;
@@ -172,8 +183,8 @@ function array2ListNode(array) {
 }
 
 /**
- * 
- * @param {ListNode} head 
+ *
+ * @param {ListNode} head
  */
 function listNode2Array(head) {
     if (head == null) {
@@ -193,5 +204,5 @@ function listNode2Array(head) {
 module.exports = {
     Node, array2Node, node2Array,
     ListNode, array2ListNode, listNode2Array,
-    TreeNode, array2TreeNode, treeNode2Array
-}
+    TreeNode, array2TreeNode, treeNode2Array,
+};
